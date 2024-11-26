@@ -1,7 +1,21 @@
 .mainbox {
     margin-top: 10px;
     display: flex;
+    flex-direction: column;
     width: 700px;
     height: 700px;
     background-color: aqua;
+}
+
+.mainbox div{
+    flex-wrap: wrap;
+    flex: 1;
+}
+
+.vertical {
+    display: flex;
+}
+
+.vertical > * {
+    flex: 1;
 }

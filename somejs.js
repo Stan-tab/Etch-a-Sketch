@@ -1,8 +1,10 @@
 const mainBox = document.querySelector(".mainbox");
 const button = document.createElement("button");
 const body = document.querySelector("body");
+const input = document.querySelector("input");
+let pixelArray;
+let verList;
 let userInput = 16;
-
 button.textContent = "Change value";
 body.insertBefore(button, body.firstChild);
 
@@ -13,6 +15,7 @@ button.addEventListener("click", () => {
     userInput = parseInt(prompt("Enter the value of the scetch size\ntill 100"));
     if (isNaN(userInput) || userInput > 100) {
         userInput = previousNumber;
+        return;
     }
     adder(userInput);
 })
@@ -27,4 +30,17 @@ function adder(num) {
         }
         mainBox.appendChild(yAciss)
     }
+    verList = [...document.querySelectorAll(".vertical")];
+    listener(verList);
+}
+
+function listener(someArray) {
+    someArray.forEach(yAciss => {
+        pixelArray = [...yAciss.querySelectorAll("div")];
+        pixelArray.forEach(pixel => {
+            pixel.addEventListener("click", () => {
+                pixel.style.backgroundColor = 'green';
+            })
+        });
+    });
 }

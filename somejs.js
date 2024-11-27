@@ -2,10 +2,15 @@ const mainBox = document.querySelector(".mainbox");
 const button = document.createElement("button");
 const body = document.querySelector("body");
 const input = document.querySelector("input");
+const colorInput = document.createElement("input");
 let pixelArray;
 let verList;
 let userInput = 16;
 button.textContent = "Change value";
+colorInput.type = "color";
+colorInput.value = "#008000";
+colorInput.style.marginLeft = "5px"
+body.insertBefore(colorInput, body.firstChild);
 body.insertBefore(button, body.firstChild);
 
 adder(16)
@@ -39,7 +44,7 @@ function listener(someArray) {
         pixelArray = [...yAciss.querySelectorAll("div")];
         pixelArray.forEach(pixel => {
             pixel.addEventListener("click", () => {
-                pixel.style.backgroundColor = 'green';
+                pixel.style.backgroundColor = colorInput.value;
             })
         });
     });

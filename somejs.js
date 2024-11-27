@@ -3,6 +3,7 @@ const button = document.createElement("button");
 const body = document.querySelector("body");
 const input = document.querySelector("input");
 const colorInput = document.createElement("input");
+let mouse = false;
 let pixelArray;
 let verList;
 let userInput = 16;
@@ -43,9 +44,23 @@ function listener(someArray) {
     someArray.forEach(yAciss => {
         pixelArray = [...yAciss.querySelectorAll("div")];
         pixelArray.forEach(pixel => {
-            pixel.addEventListener("click", () => {
+            pixel.addEventListener("mousedown", () => {
+                pixel.style.backgroundColor = colorInput.value;
+            })
+            pixel.addEventListener("mouseover", () => {
+                if (!mouse) {
+                    return
+                }
                 pixel.style.backgroundColor = colorInput.value;
             })
         });
     });
 }
+
+window.addEventListener("mousedown", () => {
+    mouse = true;
+})
+
+window.addEventListener("mouseup", () => {
+    mouse = false;
+})

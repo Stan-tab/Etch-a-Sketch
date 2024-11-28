@@ -4,16 +4,20 @@ const sizer = document.createElement("button");
 const gridSize = document.createElement("input");
 const colorInput = document.createElement("input");
 const rainbow = document.createElement("button");
+const remover = document.createElement("button");
 let tapped = false;
-let lgbt;
 let previous = 16;
-let clicked;
 let color = "#000000";
+let actualValue = 16;
+let lgbt;
+let clicked;
 
-colorInput.value = "#000000";
-sizer.textContent = "Size";
 gridSize.type = "text";
+gridSize.style.width = "120px";
 gridSize.style.marginBottom = "5px";
+sizer.textContent = "Size";
+remover.textContent = "Remove"
+colorInput.value = "#000000";
 colorInput.type = "color";
 colorInput.style.margin = "5px";
 rainbow.textContent = "Rainbow";
@@ -22,6 +26,7 @@ rainbow.style.marginBottom = "5px";
 
 body.insertBefore(rainbow, body.firstChild);
 body.insertBefore(colorInput, body.firstChild);
+body.insertBefore(remover, body.firstChild);
 body.insertBefore(sizer, body.firstChild);
 body.insertBefore(gridSize, body.firstChild);
 
@@ -73,12 +78,8 @@ function randomNumber(max) {
     return Math.floor(Math.random() * max);
 }
 
-rainbow.addEventListener("click", () => {
-    clicked = 1;
-});
-
 sizer.addEventListener("click", () =>{
-    const actualValue = parseInt(gridSize.value);
+    actualValue = parseInt(gridSize.value);
     if (!Number.isInteger(actualValue) || actualValue > 100) {
         gridSize.value = "";
         return
@@ -87,12 +88,19 @@ sizer.addEventListener("click", () =>{
     gridSize.value = "";
 })
 
+rainbow.addEventListener("click", () => {
+    clicked = 1;
+});
+
+remover.addEventListener("click", () => {
+    mainBox.replaceChildren("");
+    makingGrid(actualValue);
+})
+
 mainBox.addEventListener("mousedown", () => {
     tapped = true;
 })
-
 mainBox.addEventListener("mouseup", () => {
     tapped = false;
 })
-
 makingGrid(16);

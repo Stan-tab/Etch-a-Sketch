@@ -4,6 +4,7 @@ const sizer = document.createElement("button");
 const gridSize = document.createElement("input");
 const colorInput = document.createElement("input");
 const rainbow = document.createElement("button");
+let tapped = false;
 let lgbt;
 let previous = 16;
 let clicked;
@@ -45,7 +46,12 @@ function makingGrid(size) {
 function listening() {
     const pixels = [...mainBox.querySelectorAll(".y > div")];
     pixels.forEach(pixel => {
-        pixel.addEventListener("click", () => {
+        pixel.addEventListener("mouseover", () => {
+            if (tapped == true) {
+                pixel.style.backgroundColor = colorDesider();
+            }
+        })
+        pixel.addEventListener("mousedown", () => {
             pixel.style.backgroundColor = colorDesider();
         })
     })
@@ -79,6 +85,14 @@ sizer.addEventListener("click", () =>{
     }
     makingGrid(actualValue);
     gridSize.value = "";
+})
+
+mainBox.addEventListener("mousedown", () => {
+    tapped = true;
+})
+
+mainBox.addEventListener("mouseup", () => {
+    tapped = false;
 })
 
 makingGrid(16);

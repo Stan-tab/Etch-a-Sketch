@@ -1,66 +1,84 @@
+const body = document.querySelector("body")
 const mainBox = document.querySelector(".mainbox");
-const button = document.createElement("button");
-const body = document.querySelector("body");
-const input = document.querySelector("input");
+const sizer = document.createElement("button");
+const gridSize = document.createElement("input");
 const colorInput = document.createElement("input");
-let mouse = false;
-let pixelArray;
-let verList;
-let userInput = 16;
-button.textContent = "Change value";
+const rainbow = document.createElement("button");
+let lgbt;
+let previous = 16;
+let clicked;
+let color = "#000000";
+
+colorInput.value = "#000000";
+sizer.textContent = "Size";
+gridSize.type = "text";
+gridSize.style.marginBottom = "5px";
 colorInput.type = "color";
-colorInput.value = "#008000";
-colorInput.style.marginLeft = "5px"
+colorInput.style.margin = "5px";
+rainbow.textContent = "Rainbow";
+rainbow.value = "#ff80ff";
+rainbow.style.marginBottom = "5px";
+
+body.insertBefore(rainbow, body.firstChild);
 body.insertBefore(colorInput, body.firstChild);
-body.insertBefore(button, body.firstChild);
+body.insertBefore(sizer, body.firstChild);
+body.insertBefore(gridSize, body.firstChild);
 
-adder(16)
-
-button.addEventListener("click", () => {
-    const previousNumber = userInput;
-    userInput = parseInt(prompt("Enter the value of the scetch size\ntill 100"));
-    if (isNaN(userInput) || userInput > 100) {
-        userInput = previousNumber;
-        return;
+function makingGrid(size) {
+    let div;
+    mainBox.replaceChildren("")
+    for (let i=0; i<size; i++){
+        div = document.createElement("div");
+        div.classList = "y";
+        mainBox.appendChild(div);
     }
-    adder(userInput);
-})
-
-function adder(num) {
-    mainBox.replaceChildren("");
-    for (let i = 0; i<num; i++){
-        const yAciss = document.createElement("div");
-        yAciss.classList.add("vertical");
-        for (let l = 0; l < num; l++) {
-            yAciss.appendChild(document.createElement("div"));
+    const list = [...mainBox.querySelectorAll(".y")];
+    list.forEach(vertical => {
+        for (let i =0; i<size; i++){
+            const pixel = document.createElement("div");
+            vertical.appendChild(pixel);
         }
-        mainBox.appendChild(yAciss)
+    })
+    listening();
+}
+
+function listening() {
+    const pixels = [...mainBox.querySelectorAll(".y > div")];
+    pixels.forEach(pixel => {
+        pixel.addEventListener("click", () => {
+            pixel.style.backgroundColor = colorDesider();
+        })
+    })
+}
+
+function colorDesider() {
+    if (color != colorInput.value || isNaN(clicked)) {
+        clicked = NaN;
+        color = colorInput.value;
+        return colorInput.value;
     }
-    verList = [...document.querySelectorAll(".vertical")];
-    listener(verList);
+    if (clicked == 1) {
+        lgbt = `rgb(${randomNumber(226)}, ${randomNumber(226)}, ${randomNumber(226)})`
+        return lgbt;
+    }
 }
 
-function listener(someArray) {
-    someArray.forEach(yAciss => {
-        pixelArray = [...yAciss.querySelectorAll("div")];
-        pixelArray.forEach(pixel => {
-            pixel.addEventListener("mousedown", () => {
-                pixel.style.backgroundColor = colorInput.value;
-            })
-            pixel.addEventListener("mouseover", () => {
-                if (!mouse) {
-                    return
-                }
-                pixel.style.backgroundColor = colorInput.value;
-            })
-        });
-    });
+function randomNumber(max) {
+    return Math.floor(Math.random() * max);
 }
 
-window.addEventListener("mousedown", () => {
-    mouse = true;
+rainbow.addEventListener("click", () => {
+    clicked = 1;
+});
+
+sizer.addEventListener("click", () =>{
+    const actualValue = parseInt(gridSize.value);
+    if (!Number.isInteger(actualValue) || actualValue > 100) {
+        gridSize.value = "";
+        return
+    }
+    makingGrid(actualValue);
+    gridSize.value = "";
 })
 
-window.addEventListener("mouseup", () => {
-    mouse = false;
-})
+makingGrid(16);

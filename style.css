@@ -1,21 +1,19 @@
 .mainbox {
-    margin-top: 10px;
     display: flex;
     flex-direction: column;
-    width: 700px;
-    height: 700px;
     background-color: aqua;
-}
-
-.mainbox div{
-    flex-wrap: wrap;
+    width: 600px;
+    height: 600px;
+  }
+  
+  .mainbox > * {
     flex: 1;
-}
-
-.vertical {
+  }
+  
+  .y {
     display: flex;
-}
-
-.vertical > * {
+  }
+  
+  .y > * {
     flex: 1;
-}
+  }
